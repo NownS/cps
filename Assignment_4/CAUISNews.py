@@ -10,7 +10,7 @@ class Scraper():
         self.url = "http://security.cau.ac.kr/board.htm?bbsid=news&ctg_cd=&skey=&keyword=&mode=list"
         self.newstitle = []
         self.newslink = []
-        self.newssee = []
+        self.newsview = []
         self.newsdate = []
     
     def getpage(self, soup) :
@@ -34,18 +34,21 @@ class Scraper():
         for n in newslist:
             self.newstitle.append(n.find('b').text)
             self.newslink.append("http://security.cau.ac.kr/board.htm" + n.find("a")['href'])
-            self.newssee.append(n.find("span", title="조회수").text)
+            self.newsview.append(n.find("span", title="조회수").text)
             self.newsdate.append(n.find("span", title="작성일").text)
-        self.writeCSV(self.newstitle, self.newslink, self.newssee, self.newsdate, cnt)
+        self.writeCSV(self.newstitle, self.newslink, self.newsview, self.newsdate, cnt)
 
-    def writeCSV(self, title, link, see, date, cnt) :
+    def writeCSV(self, title, link, view, date, cnt) :
         file = open("CAUISNEWS.csv", "a", newline="")
         
         wr = csv.writer(file)
         for i in range(len(title)) :
-            wr.writerow([str(i+1 + cnt*9), title[i], link[i], see[i], date[i]])
-
+            wr.writerow([str(i+1 + cnt*9), title[i], link[i], view[i], date[i]])
         file.close
+        self.newstitle = []
+        self.newslink = []
+        self.newsview = []
+        self.newsdate = []
 
     def scrap_init(self) :
         file= open("CAUISNEWS.csv","w", newline = "")
