@@ -44,7 +44,7 @@ class Scraper():
         wr = csv.writer(file)
         for i in range(len(title)) :
             wr.writerow([str(i+1 + cnt*9), title[i], link[i], view[i], date[i]])
-        file.close
+        file.close()
         self.newstitle = []
         self.newslink = []
         self.newsview = []
@@ -54,7 +54,7 @@ class Scraper():
         file= open("CAUISNEWS.csv","w", newline = "")
         wr = csv.writer(file)
         wr.writerow(["No.", "Title", "URL", "View", "Date"])
-        file.close
+        file.close()
 
 
 
